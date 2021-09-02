@@ -31,6 +31,7 @@ type Browser struct {
 	// FonePad, Ebook Reader, Car Entertainment System or unknown
 	DeviceType           string
 	DeviceName           string
+	DeviceCodeName       string
 	DeviceBrand          string
 	DevicePointingMethod string
 
@@ -123,6 +124,8 @@ func (browser *Browser) setValue(key, item string) {
 	} else if key == "Device_Type" {
 		browser.DeviceType = item
 	} else if key == "Device_Code_Name" {
+		browser.DeviceCodeName = item
+	} else if key == "Device_Name" {
 		browser.DeviceName = item
 	} else if key == "Device_Brand_Name" {
 		browser.DeviceBrand = item
@@ -179,6 +182,9 @@ func extractBrowser(data map[string]string) *Browser {
 		browser.DeviceType = item
 	}
 	if item, ok := data["Device_Code_Name"]; ok {
+		browser.DeviceCodeName = item
+	}
+	if item, ok := data["Device_Name"]; ok {
 		browser.DeviceName = item
 	}
 	if item, ok := data["Device_Brand_Name"]; ok {
@@ -220,11 +226,11 @@ func (browser *Browser) IsAndroid() bool {
 }
 
 func (browser *Browser) IsIPhone() bool {
-	return browser.Platform == "iOS" && browser.DeviceName == "iPhone"
+	return browser.Platform == "iOS" && browser.DeviceCodeName == "iPhone"
 }
 
 func (browser *Browser) IsIPad() bool {
-	return browser.Platform == "iOS" && browser.DeviceName == "iPad"
+	return browser.Platform == "iOS" && browser.DeviceCodeName == "iPad"
 }
 
 func (browser *Browser) IsWinPhone() bool {
